@@ -1,11 +1,24 @@
-; .exec is devided into sections of code, text, data and others. 
+; creating a section of data
+section .data
+        msg     db "hello, world", '\n'
+
+; creating a section of text
 section .text
+        global _start
 
-; return 0 on language C
-mov ebx, 0
-; eax => 32bits
-; rax => 64bits
-mov eax, 1
+; not necessary
+_start:
+        ; write syscall
+        mov     rax, 1
+        ; file descriptor, standard output
+        mov     rdi, 1
+        ; message address
+        mov     rsi, msg
+        ; call write syscall
+        syscall
 
-; interruption 80, way to call a syscall. (old form).
-int 0x80
+        ; exit
+        mov rax, 60
+        mov rdi, 0
+
+        syscall
